@@ -52,7 +52,7 @@ describe('Markdown reporter', function () {
         '<a name="' + sluggedFullTitle + '"></a>\n ' + expectedTitle + '\n'
       ];
 
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
   describe('on \'pass\'', function () {
@@ -94,7 +94,7 @@ describe('Markdown reporter', function () {
         expectedTitle + '.\n\n```js\n' + expectedBody + '\n```\n\n'
       ];
 
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
 });

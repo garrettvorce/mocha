@@ -18,7 +18,7 @@ describe('durations', function () {
   });
 
   describe('when fast', function () {
-    it('should not highlight', function (done) {
+    it('should highlight in green', function (done) {
       setTimeout(function () {
         done();
       }, 10);

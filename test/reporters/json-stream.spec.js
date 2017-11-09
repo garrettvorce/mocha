@@ -30,7 +30,7 @@ describe('Json Stream reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.eql('["start",{"total":' + expectedTotal + '}]\n');
+      stdout[0].should.deepEqual('["start",{"total":' + expectedTotal + '}]\n');
     });
   });
 
@@ -56,7 +56,7 @@ describe('Json Stream reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.eql('["pass",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + '}]\n');
+      stdout[0].should.deepEqual('["pass",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + '}]\n');
     });
   });
 
@@ -89,7 +89,7 @@ describe('Json Stream reporter', function () {
 
         process.stdout.write = stdoutWrite;
 
-        expect(stdout[0]).to.eql('["fail",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + ',"err":"' + expectedErrorMessage + '","stack":"' + expectedErrorStack + '"}]\n');
+        stdout[0].should.deepEqual('["fail",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + ',"err":"' + expectedErrorMessage + '","stack":"' + expectedErrorStack + '"}]\n');
       });
     });
     describe('if error stack does not exist', function () {
@@ -118,7 +118,7 @@ describe('Json Stream reporter', function () {
 
         process.stdout.write = stdoutWrite;
 
-        expect(stdout[0]).to.eql('["fail",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + ',"err":"' + expectedErrorMessage + '","stack":null}]\n');
+        stdout[0].should.deepEqual('["fail",{"title":"' + expectedTitle + '","fullTitle":"' + expectedFullTitle + '","duration":' + expectedDuration + ',"currentRetry":' + currentRetry + ',"err":"' + expectedErrorMessage + '","stack":null}]\n');
       });
     });
   });
@@ -134,7 +134,7 @@ describe('Json Stream reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.match(/end/);
+      stdout[0].should.match(/end/);
     });
   });
 });

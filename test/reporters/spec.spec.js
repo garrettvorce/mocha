@@ -41,7 +41,7 @@ describe('Spec reporter', function () {
       var expectedArray = [
         expectedTitle + '\n'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
   describe('on pending', function () {
@@ -60,7 +60,7 @@ describe('Spec reporter', function () {
       var expectedArray = [
         '  - ' + expectedTitle + '\n'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
   describe('on pass', function () {
@@ -81,7 +81,7 @@ describe('Spec reporter', function () {
         Spec.call({epilogue: function () {}}, runner);
         process.stdout.write = stdoutWrite;
         var expectedString = '  ' + Base.symbols.ok + ' ' + expectedTitle + ' (' + expectedDuration + 'ms)' + '\n';
-        expect(stdout[0]).to.equal(expectedString);
+        stdout[0].should.equal(expectedString);
       });
     });
     describe('if test speed is fast', function () {
@@ -101,7 +101,7 @@ describe('Spec reporter', function () {
         Spec.call({epilogue: function () {}}, runner);
         process.stdout.write = stdoutWrite;
         var expectedString = '  ' + Base.symbols.ok + ' ' + expectedTitle + '\n';
-        expect(stdout[0]).to.equal(expectedString);
+        stdout[0].should.equal(expectedString);
       });
     });
   });
@@ -122,7 +122,7 @@ describe('Spec reporter', function () {
       var expectedArray = [
         '  ' + functionCount + ') ' + expectedTitle + '\n'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
 });

@@ -1,6 +1,8 @@
 'use strict';
 
 var utils = require('../../lib/utils');
+var toISOString = require('../../lib/to-iso-string');
+var JSON = require('json3');
 
 describe('lib/utils', function () {
   describe('clean', function () {
@@ -162,17 +164,25 @@ describe('lib/utils', function () {
     });
 
     it('should return Buffer with .toJSON representation', function () {
-      expect(stringify(Buffer.from([0x01]))).to.equal('[\n  1\n]');
-      expect(stringify(Buffer.from([0x01, 0x02]))).to.equal('[\n  1\n  2\n]');
+      expect(stringify(new Buffer([0x01]))).to.equal('[\n  1\n]');
+      expect(stringify(new Buffer([0x01, 0x02]))).to.equal('[\n  1\n  2\n]');
 
-      expect(stringify(Buffer.from('ABCD'))).to.equal('[\n  65\n  66\n  67\n  68\n]');
+      expect(stringify(new Buffer('ABCD'))).to.equal('[\n  65\n  66\n  67\n  68\n]');
     });
 
     it('should return Date object with .toISOString() + string prefix', function () {
-      expect(stringify(new Date(0))).to.equal('[Date: ' + new Date(0).toISOString() + ']');
+      expect(stringify(new Date(0))).to.equal('[Date: ' + shimToISOString(new Date(0)) + ']');
 
       var date = new Date(); // now
-      expect(stringify(date)).to.equal('[Date: ' + date.toISOString() + ']');
+      expect(stringify(date)).to.equal('[Date: ' + shimToISOString(date) + ']');
+
+      function shimToISOString (date) {
+        if (date.toISOString) {
+          return date.toISOString();
+        } else {
+          return toISOString(date);
+        }
+      }
     });
 
     it('should return invalid Date object with .toString() + string prefix', function () {
@@ -214,7 +224,7 @@ describe('lib/utils', function () {
           infi: Infinity,
           nan: NaN,
           zero: -0,
-          buffer: Buffer.from([0x01, 0x02]),
+          buffer: new Buffer([0x01, 0x02]),
           array: [1, 2, 3],
           empArr: [],
           matrix: [[1],
@@ -483,6 +493,91 @@ describe('lib/utils', function () {
     afterEach(function () {
       Object.prototype.toString = toString;
     });
+  });
+
+  describe('isBuffer()', function () {
+    var isBuffer = utils.isBuffer;
+    it('should test if object is a Buffer', function () {
+      expect(isBuffer(new Buffer([0x01])))
+        .to
+        .equal(true);
+      expect(isBuffer({}))
+        .to
+        .equal(false);
+    });
+  });
+
+  describe('map()', function () {
+    var map = utils.map;
+    it('should behave same as Array.prototype.map', function () {
+      if (!Array.prototype.map) {
+        this.skip();
+        return;
+      }
+
+      var arr = [
+        1,
+        2,
+        3
+      ];
+      expect(map(arr, JSON.stringify))
+        .to
+        .eql(arr.map(JSON.stringify));
+    });
+
+    it('should call the callback with 3 arguments[currentValue, index, array]',
+      function () {
+        var index = 0;
+        map([
+          1,
+          2,
+          3
+        ], function (e, i, arr) {
+          expect(e).to.equal(arr[index]);
+          expect(i).to.equal(index++);
+        });
+      });
+
+    it('should apply with the given scope', function () {
+      var scope = {};
+      map([
+        'a',
+        'b',
+        'c'
+      ], function () {
+        expect(this).to.equal(scope);
+      }, scope);
+    });
+  });
+
+  describe('some()', function () {
+    var some = utils.some;
+
+    it(
+      'should return true when some array elements pass the check of the fn parameter',
+      function () {
+        var result = some([
+          'a',
+          'b',
+          'c'
+        ], function (e) {
+          return e === 'b';
+        });
+        expect(result).to.eql(true);
+      });
+
+    it(
+      'should return false when none of the array elements pass the check of the fn parameter',
+      function () {
+        var result = some([
+          'a',
+          'b',
+          'c'
+        ], function (e) {
+          return e === 'd';
+        });
+        expect(result).to.eql(false);
+      });
   });
 
   describe('parseQuery()', function () {

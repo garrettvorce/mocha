@@ -33,7 +33,7 @@ describe('Progress reporter', function () {
       Progress.call({}, runner);
 
       process.stdout.write = stdoutWrite;
-      expect(calledCursorHide).to.be(true);
+      calledCursorHide.should.be.true();
 
       Base.cursor = cachedCursor;
     });
@@ -61,7 +61,7 @@ describe('Progress reporter', function () {
 
         process.stdout.write = stdoutWrite;
 
-        expect(stdout).to.eql([]);
+        stdout.should.deepEqual([]);
 
         Base.cursor = cachedCursor;
         Base.useColors = useColors;
@@ -106,8 +106,8 @@ describe('Progress reporter', function () {
           expectedIncomplete,
           expectedClose
         ];
-        expect(calledCursorCR).to.be(true);
-        expect(stdout).to.eql(expectedArray);
+        calledCursorCR.should.be.true();
+        stdout.should.deepEqual(expectedArray);
 
         Base.cursor = cachedCursor;
         Base.useColors = useColors;
@@ -136,8 +136,8 @@ describe('Progress reporter', function () {
       }, runner);
 
       process.stdout.write = stdoutWrite;
-      expect(calledEpilogue).to.be(true);
-      expect(calledCursorShow).to.be(true);
+      calledEpilogue.should.be.true();
+      calledCursorShow.should.be.true();
 
       Base.cursor = cachedCursor;
     });

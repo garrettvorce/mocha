@@ -1,6 +1,8 @@
 'use strict';
 
-var mocha = require('../../lib/mocha');
+/* jshint node: true */
+
+var mocha = require('../../../lib/mocha');
 
 var beforeEach = mocha.beforeEach;
 var it = mocha.it;

@@ -7,7 +7,7 @@
  * Shim process.stdout.
  */
 
-process.stdout = require('browser-stdout')({level: false});
+process.stdout = require('browser-stdout')();
 
 var Mocha = require('./lib/mocha');
 
@@ -45,7 +45,7 @@ process.removeListener = function (e, fn) {
     } else {
       global.onerror = function () {};
     }
-    var i = uncaughtExceptionHandlers.indexOf(fn);
+    var i = Mocha.utils.indexOf(uncaughtExceptionHandlers, fn);
     if (i !== -1) {
       uncaughtExceptionHandlers.splice(i, 1);
     }
@@ -103,7 +103,7 @@ Mocha.Runner.immediately = function (callback) {
  * only receive the 'message' attribute of the Error.
  */
 mocha.throwError = function (err) {
-  uncaughtExceptionHandlers.forEach(function (fn) {
+  Mocha.utils.forEach(uncaughtExceptionHandlers, function (fn) {
     fn(err);
   });
   throw err;

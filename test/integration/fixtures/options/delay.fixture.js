@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var delay = 200;
+var delay = 500;
 
 setTimeout(function () {
   describe('delayed execution', function () {

@@ -4,13 +4,15 @@ daysUntilStale: 120
 daysUntilClose: 14
 # Issues with these labels will never be considered stale
 exemptLabels:
-  - help-wanted
-  - confirmed-bug
+  - pr-please
+  - confirmed
   - future
+  - bug
   - chore
   - feature
-  - unconfirmed-bug
+  - unconfirmed
   - usability
+  - to-merge
   - browser
   - reporter
   - feature

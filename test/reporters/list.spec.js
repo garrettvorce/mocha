@@ -50,7 +50,7 @@ describe('List reporter', function () {
         startString,
         testString
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
   describe('on pending', function () {
@@ -70,7 +70,7 @@ describe('List reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.eql('  - ' + expectedTitle + '\n');
+      stdout[0].should.deepEqual('  - ' + expectedTitle + '\n');
     });
   });
   describe('on pass', function () {
@@ -98,7 +98,7 @@ describe('List reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(calledCursorCR).to.be(true);
+      calledCursorCR.should.be.true();
 
       Base.cursor = cachedCursor;
     });
@@ -126,7 +126,7 @@ describe('List reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.equal('  ' + expectedOkSymbol + ' ' + expectedTitle + ': ' + expectedDuration + 'ms\n');
+      stdout[0].should.equal('  ' + expectedOkSymbol + ' ' + expectedTitle + ': ' + expectedDuration + 'ms\n');
 
       Base.cursor = cachedCursor;
       Base.symbols = cachedSymbols;
@@ -157,7 +157,7 @@ describe('List reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(calledCursorCR).to.be(true);
+      calledCursorCR.should.be.true();
 
       Base.cursor = cachedCursor;
     });
@@ -188,7 +188,7 @@ describe('List reporter', function () {
 
       process.stdout.write = stdoutWrite;
 
-      expect(stdout[0]).to.equal('  ' + expectedErrorCount + ') ' + expectedTitle + '\n');
+      stdout[0].should.equal('  ' + expectedErrorCount + ') ' + expectedTitle + '\n');
 
       Base.cursor = cachedCursor;
     });
@@ -209,7 +209,7 @@ describe('List reporter', function () {
       }, runner);
       process.stdout.write = stdoutWrite;
 
-      expect(calledEpilogue).to.be(true);
+      calledEpilogue.should.be.true();
     });
   });
 });

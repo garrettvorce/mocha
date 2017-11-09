@@ -35,7 +35,7 @@ describe('Nyan reporter', function () {
         }, runner);
         process.stdout.write = stdoutWrite;
 
-        expect(calledDraw).to.be(true);
+        calledDraw.should.be.true();
       });
     });
     describe('on pending', function () {
@@ -54,7 +54,7 @@ describe('Nyan reporter', function () {
         }, runner);
         process.stdout.write = stdoutWrite;
 
-        expect(calledDraw).to.be(true);
+        calledDraw.should.be.true();
       });
     });
     describe('on pass', function () {
@@ -77,7 +77,7 @@ describe('Nyan reporter', function () {
         }, runner);
         process.stdout.write = stdoutWrite;
 
-        expect(calledDraw).to.be(true);
+        calledDraw.should.be.true();
       });
     });
     describe('on fail', function () {
@@ -99,7 +99,7 @@ describe('Nyan reporter', function () {
         }, runner);
         process.stdout.write = stdoutWrite;
 
-        expect(calledDraw).to.be(true);
+        calledDraw.should.be.true();
       });
     });
     describe('on end', function () {
@@ -119,7 +119,7 @@ describe('Nyan reporter', function () {
         }, runner);
         process.stdout.write = stdoutWrite;
 
-        expect(calledEpilogue).to.be(true);
+        calledEpilogue.should.be.true();
       });
       it('should write numberOfLines amount of new lines', function () {
         var expectedNumberOfLines = 4;
@@ -137,7 +137,7 @@ describe('Nyan reporter', function () {
         var arrayOfNewlines = stdout.filter(function (value) { return value === '\n'; });
         process.stdout.write = stdoutWrite;
 
-        expect(arrayOfNewlines).to.have.length(expectedNumberOfLines);
+        arrayOfNewlines.should.have.length(expectedNumberOfLines);
       });
       it('should call Base show', function () {
         var showCalled = false;
@@ -157,7 +157,7 @@ describe('Nyan reporter', function () {
         }, runner);
 
         process.stdout.write = stdoutWrite;
-        expect(showCalled).to.be(true);
+        showCalled.should.be.true();
         Base.cursor.show = cachedShow;
       });
     });
@@ -208,7 +208,7 @@ describe('Nyan reporter', function () {
           '  ""  "" ',
           '\n'
         ];
-        expect(stdout).to.eql(expectedArray);
+        stdout.should.deepEqual(expectedArray);
       });
     });
     describe('if tick is true', function () {
@@ -244,7 +244,7 @@ describe('Nyan reporter', function () {
           ' ""  "" ',
           '\n'
         ];
-        expect(stdout).to.eql(expectedArray);
+        stdout.should.deepEqual(expectedArray);
       });
     });
   });
@@ -270,7 +270,7 @@ describe('Nyan reporter', function () {
       var expectedArray = [
         '\u001b[' + expectedNumber + 'B'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
 
@@ -295,7 +295,7 @@ describe('Nyan reporter', function () {
       var expectedArray = [
         '\u001b[' + expectedNumber + 'A'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
   });
 
@@ -317,7 +317,7 @@ describe('Nyan reporter', function () {
         var expectedString = 'hello';
         var outputString = nyanCat.rainbowify(expectedString);
 
-        expect(outputString).to.equal(expectedString);
+        outputString.should.equal(expectedString);
       });
     });
     describe('useColors is true', function () {
@@ -345,7 +345,7 @@ describe('Nyan reporter', function () {
           },
           expectedString);
 
-        expect(outputString).to.equal(expectedRainbowifyString);
+        outputString.should.equal(expectedRainbowifyString);
       });
     });
   });
@@ -367,7 +367,7 @@ describe('Nyan reporter', function () {
           trajectories: trajectories
         });
 
-        expect(expectedSegment).to.equal('_');
+        expectedSegment.should.deepEqual('_');
       });
       it('should shift each trajectory item, if its length is greater of equal to its max width', function () {
         var nyanCat = new NyanCat({on: function () {}});
@@ -385,7 +385,7 @@ describe('Nyan reporter', function () {
           trajectories: trajectories
         });
 
-        expect(trajectories).to.eql(expectedTrajectories);
+        trajectories.should.deepEqual(expectedTrajectories);
       });
     });
     describe('if tick is false', function () {
@@ -404,7 +404,7 @@ describe('Nyan reporter', function () {
           trajectories: trajectories
         });
 
-        expect(expectedSegment).to.eql('-');
+        expectedSegment.should.deepEqual('-');
       });
     });
   });
@@ -442,7 +442,7 @@ describe('Nyan reporter', function () {
         '\n',
         '\n'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
       process.stdout.write = stdoutWrite;
       Base.color = cachedColor;
     });
@@ -464,7 +464,7 @@ describe('Nyan reporter', function () {
         numberOfLines: expectedNumberOfLines
       });
 
-      expect(expectedCursorArgument).to.equal(expectedNumberOfLines);
+      expectedCursorArgument.should.equal(expectedNumberOfLines);
       process.stdout.write = stdoutWrite;
     });
   });
@@ -495,7 +495,7 @@ describe('Nyan reporter', function () {
         expectedContents,
         '\n'
       ];
-      expect(stdout).to.eql(expectedArray);
+      stdout.should.deepEqual(expectedArray);
     });
 
     it('should call cursorUp with given numberOfLines', function () {
@@ -517,7 +517,7 @@ describe('Nyan reporter', function () {
         numberOfLines: expectedNumberOfLines
       });
 
-      expect(expectedCursorArgument).to.equal(expectedNumberOfLines);
+      expectedCursorArgument.should.equal(expectedNumberOfLines);
       process.stdout.write = stdoutWrite;
     });
   });
@@ -525,25 +525,25 @@ describe('Nyan reporter', function () {
     it('expected face:(x .x) when "failures" at least one', function () {
       var nyanCat = new NyanCat({on: function () {}});
       nyanCat.stats = { passes: 2, pending: 1, failures: 1 };
-      expect(nyanCat.face()).to.equal('( x .x)');
+      nyanCat.face().should.equal('( x .x)');
     });
 
     it('expected face:(x .x) when "pending" at least one and no failing', function () {
       var nyanCat = new NyanCat({on: function () {}});
       nyanCat.stats = { passes: 2, pending: 1, failures: 0 };
-      expect(nyanCat.face()).to.equal('( o .o)');
+      nyanCat.face().should.equal('( o .o)');
     });
 
     it('expected face:(^ .^) when "passing" only', function () {
       var nyanCat = new NyanCat({on: function () {}});
       nyanCat.stats = { passes: 1, pending: 0, failures: 0 };
-      expect(nyanCat.face()).to.equal('( ^ .^)');
+      nyanCat.face().should.equal('( ^ .^)');
     });
 
     it('expected face:(- .-) when otherwise', function (done) {
       var nyanCat = new NyanCat({on: function () {}});
       nyanCat.stats = { passes: 0, pending: 0, failures: 0 };
-      expect(nyanCat.face()).to.equal('( - .-)');
+      nyanCat.face().should.equal('( - .-)');
       done();
     });
   });
